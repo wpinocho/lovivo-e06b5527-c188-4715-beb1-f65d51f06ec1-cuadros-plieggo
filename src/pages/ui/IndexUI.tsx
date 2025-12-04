@@ -53,7 +53,7 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
         {/* Content over video */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-            Arte Origami Hecho a Mano
+            Arte en Papel
           </h1>
           <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
             Cada pieza es única, elaborada por artesanos mexicanos con técnica origami tradicional y papel de alta calidad.
