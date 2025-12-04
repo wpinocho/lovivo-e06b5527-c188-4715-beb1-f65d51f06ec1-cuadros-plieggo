@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
 import { ProductCard } from '@/components/ProductCard';
 import { CollectionCard } from '@/components/CollectionCard';
+import { StyleCard, type Style } from '@/components/StyleCard';
 import { FloatingCart } from '@/components/FloatingCart';
 import { NewsletterSection } from '@/components/NewsletterSection';
 import { EcommerceTemplate } from '@/templates/EcommerceTemplate';
@@ -29,6 +31,56 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
     handleViewCollectionProducts,
     handleShowAllProducts,
   } = logic;
+
+  const [selectedStyleId, setSelectedStyleId] = useState<string | null>(null);
+
+  // Define los estilos disponibles
+  const styles: Style[] = [
+    {
+      id: 'acordeon',
+      name: 'Acordeón',
+      description: 'Diseño clásico con pliegues en zigzag que crean profundidad y textura. Elegante y versátil.',
+      image: 'https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/style-acordeon.jpg',
+      collectionsCount: 3,
+      productsCount: 17
+    },
+    {
+      id: 'splash',
+      name: 'Splash',
+      description: 'Diseño dinámico con explosiones de color y formas orgánicas. Moderno y vibrante.',
+      image: 'https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/style-splash.jpg',
+      collectionsCount: 0,
+      productsCount: 0
+    },
+    {
+      id: 'reguilete',
+      name: 'Reguilete',
+      description: 'Diseño geométrico inspirado en molinillos de viento. Simétrico y alegre.',
+      image: 'https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/style-reguilete.jpg',
+      collectionsCount: 0,
+      productsCount: 0
+    }
+  ];
+
+  const handleViewStyle = (styleId: string) => {
+    setSelectedStyleId(styleId);
+    // Scroll to collections section
+    const collectionsSection = document.getElementById('collections');
+    if (collectionsSection) {
+      collectionsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleResetStyle = () => {
+    setSelectedStyleId(null);
+  };
+
+  // Filtrar colecciones por estilo
+  const filteredCollectionsByStyle = selectedStyleId === 'acordeon' 
+    ? collections 
+    : [];
+
+  const showCollections = selectedStyleId === 'acordeon' && filteredCollectionsByStyle.length > 0;
 
   return (
     <EcommerceTemplate 
@@ -75,21 +127,56 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
         </div>
       </section>
 
+      {/* Styles Section */}
+      <section id="styles" className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-3">
+              Nuestros Estilos
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Descubre las diferentes técnicas de origami que utilizamos. Cada estilo tiene su propia personalidad y estética única.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {styles.map((style) => (
+              <StyleCard 
+                key={style.id} 
+                style={style} 
+                onViewStyle={handleViewStyle}
+              />
+            ))}
+          </div>
+
+          {selectedStyleId && (
+            <div className="mt-8 text-center">
+              <Button 
+                variant="outline" 
+                onClick={handleResetStyle}
+              >
+                Ver Todos los Estilos
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Collections Section */}
-      {!loadingCollections && collections.length > 0 && (
+      {!loadingCollections && showCollections && (
         <section id="collections" className="py-16 bg-muted/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-3">
-                Nuestras Colecciones
+                Colecciones - Estilo {styles.find(s => s.id === selectedStyleId)?.name}
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Explora nuestras colecciones temáticas, cada una con su propia paleta de colores y personalidad única
+                Explora nuestras colecciones de {styles.find(s => s.id === selectedStyleId)?.name.toLowerCase()}, cada una con su propia paleta de colores y personalidad única
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {collections.map((collection) => (
+              {filteredCollectionsByStyle.map((collection) => (
                 <CollectionCard 
                   key={collection.id} 
                   collection={collection} 

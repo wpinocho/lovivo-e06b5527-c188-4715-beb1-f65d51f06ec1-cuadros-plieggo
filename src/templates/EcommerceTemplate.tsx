@@ -54,6 +54,12 @@ export const EcommerceTemplate = ({
           {/* Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <nav className="flex space-x-6">
+              <ScrollLink 
+                to="/#styles" 
+                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
+              >
+                Estilos
+              </ScrollLink>
               {!loadingCollections && hasCollections && (
                 <ScrollLink 
                   to="/#collections" 
