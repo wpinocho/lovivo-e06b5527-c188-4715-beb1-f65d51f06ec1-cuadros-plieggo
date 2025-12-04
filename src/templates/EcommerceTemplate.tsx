@@ -57,20 +57,20 @@ export const EcommerceTemplate = ({
               {!loadingCollections && hasCollections && (
                 <ScrollLink 
                   to="/#collections" 
-                  className="text-foreground/70 hover:text-foreground transition-colors"
+                  className="text-foreground/70 hover:text-foreground transition-colors font-medium"
                 >
-                  Collections
+                  Colecciones
                 </ScrollLink>
               )}
               <ScrollLink 
                 to="/#products" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
               >
-                Products
+                Cuadros
               </ScrollLink>
               <Link 
                 to="/blog" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
               >
                 Blog
               </Link>
@@ -113,26 +113,31 @@ export const EcommerceTemplate = ({
   )
 
   const footer = (
-    <div className={`bg-black text-white py-12 ${footerClassName}`}>
+    <div className={`bg-secondary text-white py-12 ${footerClassName}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
-            <BrandLogoLeft />
-            <p className="mt-4 text-white/70">
-              Your trusted online store
+            <h3 className="font-bold text-xl mb-4 text-white">Plieggo</h3>
+            <p className="text-white/80 mb-4">
+              Arte origami mexicano hecho a mano con técnica tradicional y papel de alta calidad.
             </p>
+            <div className="space-y-2 text-sm text-white/70">
+              <p>✓ 100% Hecho a Mano</p>
+              <p>✓ Artesanía Mexicana</p>
+              <p>✓ Papel Premium</p>
+            </div>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Links</h3>
+            <h3 className="font-semibold mb-4 text-white">Enlaces</h3>
             <div className="space-y-2">
               <Link 
                 to="/" 
                 className="block text-white/70 hover:text-white transition-colors"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
@@ -145,13 +150,13 @@ export const EcommerceTemplate = ({
 
           {/* Social Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Follow Us</h3>
+            <h3 className="font-semibold mb-4 text-white">Síguenos</h3>
             <SocialLinks />
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-white/20 text-center text-white/70">
-          <p>&copy; 2024 Your Store. All rights reserved.</p>
+          <p>&copy; 2024 Plieggo. Todos los derechos reservados.</p>
         </div>
       </div>
     </div>
