@@ -49,7 +49,7 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
       name: 'Splash',
       description: 'Diseño dinámico con explosiones de color y formas orgánicas. Moderno y vibrante.',
       image: 'https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/style-splash.jpg',
-      collectionsCount: 0,
+      collectionsCount: 2,
       productsCount: 0
     },
     {
