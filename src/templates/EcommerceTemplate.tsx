@@ -118,7 +118,14 @@ export const EcommerceTemplate = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="font-bold text-xl mb-4 text-white">Plieggo</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/plieggo-logo-transparent.png" 
+                alt="Plieggo Logo"
+                className="h-10 w-auto object-contain" 
+              />
+              <h3 className="font-bold text-xl text-white">Plieggo</h3>
+            </div>
             <p className="text-white/80 mb-4">
               Arte origami mexicano hecho a mano con técnica tradicional y papel de alta calidad.
             </p>
@@ -128,7 +135,6 @@ export const EcommerceTemplate = ({
               <p>✓ Papel Premium</p>
             </div>
           </div>
-
           {/* Links */}
           <div>
             <h3 className="font-semibold mb-4 text-white">Enlaces</h3>
