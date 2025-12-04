@@ -34,9 +34,24 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
     <EcommerceTemplate 
       showCart={true}
     >
-      {/* Hero Section */}
-      <section className="bg-background py-20 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Hero Section with Video */}
+      <section className="relative bg-background py-20 border-b border-border overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0 opacity-20">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
+            poster="/videos/hero-origami-poster.jpg"
+          >
+            <source src="/videos/hero-origami.mp4" type="video/mp4" />
+          </video>
+        </div>
+        
+        {/* Content over video */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
             Arte Origami Hecho a Mano
           </h1>
