@@ -73,7 +73,7 @@ export const EcommerceTemplate = ({
 
                 {!loadingCollections && hasCollections && (
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-foreground/70 hover:text-foreground transition-colors font-medium">
+                    <NavigationMenuTrigger className="text-foreground/70 hover:text-foreground transition-colors font-medium bg-transparent hover:bg-transparent data-[state=open]:bg-transparent">
                       Colecciones
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
