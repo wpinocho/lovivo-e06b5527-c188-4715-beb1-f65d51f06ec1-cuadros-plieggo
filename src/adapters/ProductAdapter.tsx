@@ -32,7 +32,7 @@ export const useProductCardLogic = (product: Product) => {
     // Check if there's at least one variant that:
     // 1. Has this option value
     // 2. Has all currently selected other option values
-    // 3. Has inventory > 0
+    // 3. Is available (checks both 'available' field and inventory_quantity)
     return variants?.some(v => {
       const ov = (v as any).options || {}
       
@@ -46,7 +46,12 @@ export const useProductCardLogic = (product: Product) => {
         }
       }
       
-      // Check if this variant has inventory
+      // Check if this variant is available
+      // Priority: 'available' field, then fallback to inventory_quantity
+      const vAny = v as any
+      if (vAny.available !== undefined) {
+        return vAny.available === true
+      }
       return (v.inventory_quantity ?? 0) > 0
     }) ?? false
   }
@@ -81,7 +86,16 @@ export const useProductCardLogic = (product: Product) => {
     
     const inv = anyProduct.inventory_quantity
     if (typeof inv === 'number') return (inv || 0) > 0
-    if (hasVariants) return variants!.some(v => (v.inventory_quantity ?? 0) > 0)
+    if (hasVariants) {
+      return variants!.some(v => {
+        const vAny = v as any
+        // Priority: check 'available' field first, then fallback to inventory_quantity
+        if (vAny.available !== undefined) {
+          return vAny.available === true
+        }
+        return (v.inventory_quantity ?? 0) > 0
+      })
+    }
     return true
   }, [product, hasVariants, variants])
 

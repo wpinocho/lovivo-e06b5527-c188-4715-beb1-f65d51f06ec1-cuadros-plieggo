@@ -141,7 +141,13 @@ export const useIndexLogic = (): UseIndexLogicReturn => {
     
     if (typeof anyP.inventory_quantity === 'number') return (anyP.inventory_quantity || 0) > 0;
     if (Array.isArray(anyP.variants) && anyP.variants.length > 0) {
-      return anyP.variants.some((v: any) => (v?.inventory_quantity ?? 0) > 0);
+      return anyP.variants.some((v: any) => {
+        // Priority: check 'available' field first, then fallback to inventory_quantity
+        if (v?.available !== undefined) {
+          return v.available === true;
+        }
+        return (v?.inventory_quantity ?? 0) > 0;
+      });
     }
     return true;
   };
