@@ -6,12 +6,19 @@ import { FloatingCart } from '@/components/FloatingCart'
 import { ProfileMenu } from '@/components/ProfileMenu'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, ChevronDown } from 'lucide-react'
 import { useCartUI } from '@/components/CartProvider'
 import { useCart } from '@/contexts/CartContext'
 import { useCollections } from '@/hooks/useCollections'
-import { Input } from '@/components/ui/input'
 import { ScrollLink } from '@/components/ScrollLink'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 
 /**
  * EDITABLE TEMPLATE - EcommerceTemplate
@@ -42,7 +49,7 @@ export const EcommerceTemplate = ({
   const { openCart } = useCartUI()
   const { getTotalItems } = useCart()
   const totalItems = getTotalItems()
-  const { hasCollections, loading: loadingCollections } = useCollections()
+  const { collections, hasCollections, loading: loadingCollections } = useCollections()
 
   const header = (
     <div className={`py-2 ${headerClassName}`}>
@@ -53,34 +60,67 @@ export const EcommerceTemplate = ({
 
           {/* Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <nav className="flex space-x-6">
-              <ScrollLink 
-                to="/#styles" 
-                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
-              >
-                Estilos
-              </ScrollLink>
-              {!loadingCollections && hasCollections && (
-                <ScrollLink 
-                  to="/#collections" 
-                  className="text-foreground/70 hover:text-foreground transition-colors font-medium"
-                >
-                  Colecciones
-                </ScrollLink>
-              )}
-              <ScrollLink 
-                to="/#products" 
-                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
-              >
-                Cuadros
-              </ScrollLink>
-              <Link 
-                to="/blog" 
-                className="text-foreground/70 hover:text-foreground transition-colors font-medium"
-              >
-                Blog
-              </Link>
-            </nav>
+            <NavigationMenu>
+              <NavigationMenuList className="flex space-x-2">
+                <NavigationMenuItem>
+                  <ScrollLink 
+                    to="/#styles" 
+                    className="text-foreground/70 hover:text-foreground transition-colors font-medium px-4 py-2 inline-block"
+                  >
+                    Estilos
+                  </ScrollLink>
+                </NavigationMenuItem>
+
+                {!loadingCollections && hasCollections && (
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="text-foreground/70 hover:text-foreground transition-colors font-medium">
+                      Colecciones
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                        {collections.map((collection) => (
+                          <li key={collection.id}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to={`/collections/${collection.handle}`}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                <div className="text-sm font-medium leading-none">
+                                  {collection.name}
+                                </div>
+                                {collection.description && (
+                                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                    {collection.description}
+                                  </p>
+                                )}
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )}
+
+                <NavigationMenuItem>
+                  <ScrollLink 
+                    to="/#products" 
+                    className="text-foreground/70 hover:text-foreground transition-colors font-medium px-4 py-2 inline-block"
+                  >
+                    Cuadros
+                  </ScrollLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link 
+                    to="/blog" 
+                    className="text-foreground/70 hover:text-foreground transition-colors font-medium px-4 py-2 inline-block"
+                  >
+                    Blog
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
           {/* Profile & Cart */}

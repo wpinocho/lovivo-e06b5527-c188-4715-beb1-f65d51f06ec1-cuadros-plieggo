@@ -13,6 +13,8 @@ import { PostHogProvider } from "@/contexts/PostHogContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import Product from "./pages/Product";
+import Collections from "./pages/Collections";
+import Collection from "./pages/Collection";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
@@ -50,6 +52,8 @@ const App = () => (
                     <Routes>
                       <Route path="/" element={<Index />} />
                       <Route path="/products/:slug" element={<Product />} />
+                      <Route path="/collections" element={<Collections />} />
+                      <Route path="/collections/:handle" element={<Collection />} />
                       <Route path="/cart" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />
                       <Route path="/thank-you" element={<ThankYou />} />

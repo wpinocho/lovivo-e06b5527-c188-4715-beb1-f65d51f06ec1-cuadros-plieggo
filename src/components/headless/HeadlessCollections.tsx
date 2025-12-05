@@ -3,11 +3,19 @@ import { supabase, type Collection } from '@/lib/supabase';
 import { STORE_ID } from '@/lib/config';
 
 /**
- * Hook to check if collections exist and fetch them
+ * FORBIDDEN FILE - HeadlessCollections
+ * 
+ * Contiene toda la lógica de negocio para la página de colecciones.
+ * No modificar - protege funcionalidades críticas del ecommerce.
  */
-export const useCollections = () => {
+
+export interface UseCollectionsLogicReturn {
+  collections: Collection[];
+  loading: boolean;
+}
+
+export const useCollectionsLogic = (): UseCollectionsLogicReturn => {
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [hasCollections, setHasCollections] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,19 +33,28 @@ export const useCollections = () => {
 
       if (error) {
         console.error('Error fetching collections:', error);
-        setHasCollections(false);
-        return;
+        throw error;
       }
 
       setCollections(data || []);
-      setHasCollections((data || []).length > 0);
     } catch (error) {
       console.error('Error fetching collections:', error);
-      setHasCollections(false);
     } finally {
       setLoading(false);
     }
   };
 
-  return { collections, hasCollections, loading };
+  return {
+    collections,
+    loading,
+  };
+};
+
+interface HeadlessCollectionsProps {
+  children: (logic: UseCollectionsLogicReturn) => React.ReactNode;
+}
+
+export const HeadlessCollections = ({ children }: HeadlessCollectionsProps) => {
+  const logic = useCollectionsLogic();
+  return <>{children(logic)}</>;
 };
