@@ -166,7 +166,7 @@ export const EcommerceTemplate = ({
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/plieggo-logo-transparent-v2.png" 
+                src="https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/product-images/e06b5527-c188-4715-beb1-f65d51f06ec1/plieggo-logo-no-bg.png" 
                 alt="Plieggo Logo"
                 className="h-10 w-auto object-contain" 
               />
