@@ -98,11 +98,13 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
   };
 
   // Filtrar colecciones por estilo
-  const filteredCollectionsByStyle = selectedStyleId === 'acordeon' 
-    ? collections 
-    : [];
+  // Si no hay estilo seleccionado, mostrar todas las colecciones
+  // Si hay estilo seleccionado, filtrar por ese estilo
+  const filteredCollectionsByStyle = selectedStyleId 
+    ? (selectedStyleId === 'acordeon' ? collections : [])
+    : collections;
 
-  const showCollections = selectedStyleId === 'acordeon' && filteredCollectionsByStyle.length > 0;
+  const showCollections = !loadingCollections && filteredCollectionsByStyle.length > 0;
 
   return (
     <EcommerceTemplate 
@@ -185,15 +187,21 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
       </section>
 
       {/* Collections Section */}
-      {!loadingCollections && showCollections && (
+      {showCollections && (
         <section id="collections" className="py-16 bg-muted/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-3">
-                Colecciones - Estilo {styles.find(s => s.id === selectedStyleId)?.name}
+                {selectedStyleId 
+                  ? `Colecciones - Estilo ${styles.find(s => s.id === selectedStyleId)?.name}`
+                  : 'Nuestras Colecciones'
+                }
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Explora nuestras colecciones de {styles.find(s => s.id === selectedStyleId)?.name.toLowerCase()}, cada una con su propia paleta de colores y personalidad única
+                {selectedStyleId 
+                  ? `Explora nuestras colecciones de ${styles.find(s => s.id === selectedStyleId)?.name.toLowerCase()}, cada una con su propia paleta de colores y personalidad única`
+                  : 'Descubre todas nuestras colecciones de arte origami, cada una con su propia paleta de colores y personalidad única'
+                }
               </p>
             </div>
             
