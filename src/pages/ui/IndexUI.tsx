@@ -47,6 +47,19 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
     }
   }, [selectedStyleId]);
 
+  // Scroll when collection is selected and products section is rendered
+  useEffect(() => {
+    if (selectedCollectionId) {
+      // Small delay to ensure React has rendered the products section
+      setTimeout(() => {
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [selectedCollectionId]);
+
   // Define los estilos disponibles
   const styles: Style[] = [
     {
