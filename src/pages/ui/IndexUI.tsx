@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
@@ -34,6 +34,19 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
 
   const [selectedStyleId, setSelectedStyleId] = useState<string | null>(null);
 
+  // Scroll when style is selected and collections section is rendered
+  useEffect(() => {
+    if (selectedStyleId) {
+      // Small delay to ensure React has rendered the collections section
+      setTimeout(() => {
+        const collectionsSection = document.getElementById('collections');
+        if (collectionsSection) {
+          collectionsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [selectedStyleId]);
+
   // Define los estilos disponibles
   const styles: Style[] = [
     {
@@ -64,11 +77,7 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
 
   const handleViewStyle = (styleId: string) => {
     setSelectedStyleId(styleId);
-    // Scroll to collections section
-    const collectionsSection = document.getElementById('collections');
-    if (collectionsSection) {
-      collectionsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Scroll is now handled by useEffect above
   };
 
   const handleResetStyle = () => {
